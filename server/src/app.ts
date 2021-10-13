@@ -15,7 +15,7 @@ app.get("/chat", (req, res, next) => {
   });
 });
 
-const server = app.listen(8080);
+const server = app.listen(process.env.PORT || 8080);
 
 const io = serverIO.init(server);
 
