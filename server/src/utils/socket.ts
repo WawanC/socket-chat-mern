@@ -7,7 +7,7 @@ export default {
   init: (httpServer: http.Server) => {
     io = new Server(httpServer, {
       cors: {
-        origin: "http://localhost:3000",
+        origin: "*",
         methods: ["GET", "POST", "PUT", "DELETE"],
       },
     });

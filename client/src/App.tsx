@@ -24,7 +24,9 @@ const App: React.FC<propsInterface> = (props) => {
   useEffect(() => {
     const fetchChat = async () => {
       // const response = await fetch("http://localhost:8080/chat");
-      const response = await fetch("http://f2fa-182-1-34-153.ngrok.io/chat");
+      const response = await fetch(
+        "https://socket-chat-mern.herokuapp.com/chat"
+      );
       if (response.ok) {
         const responseData = (await response.json()) as {
           chatList: Chat[];
