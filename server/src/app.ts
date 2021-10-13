@@ -1,23 +1,15 @@
 import express from "express";
-import http from "http";
 import corsHandler from "./utils/cors";
-import { Server, Socket } from "socket.io";
+import serverIO from "./utils/socket";
 
 const app = express();
 
 app.use(corsHandler);
 
-const httpServer = http.createServer(app);
+const server = app.listen(8080);
 
-const io = new Server(httpServer, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  },
-});
+const io = serverIO.init(server);
 
-io.on("connection", (socket: Socket) => {
+io.on("connection", (socket) => {
   console.log("New Connection");
 });
-
-httpServer.listen(8080);
