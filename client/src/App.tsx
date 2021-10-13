@@ -21,6 +21,25 @@ const App: React.FC<propsInterface> = (props) => {
   };
 
   useEffect(() => {
+    const fetchChat = async () => {
+      const response = await fetch("http://localhost:8080/chat");
+      if (response.ok) {
+        const responseData = await response.json();
+        setChatList(responseData.chatList);
+      }
+    };
+    props.socket.on("newChatServer", (message) => {
+      setChatList((prevState) => {
+        const newChatList = [...prevState];
+        newChatList.push(message);
+        return newChatList;
+      });
+    });
+
+    fetchChat();
+  }, []);
+
+  useEffect(() => {
     chatBoxRef.current?.scrollTo(0, chatBoxRef.current.scrollHeight);
   }, [chatList]);
 

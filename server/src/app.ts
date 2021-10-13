@@ -2,9 +2,17 @@ import express from "express";
 import corsHandler from "./utils/cors";
 import serverIO from "./utils/socket";
 
+export const chatList: string[] = [];
+
 const app = express();
 
 app.use(corsHandler);
+
+app.get("/chat", (req, res, next) => {
+  res.status(200).json({
+    chatList: chatList,
+  });
+});
 
 const server = app.listen(8080);
 
@@ -15,5 +23,7 @@ io.on("connection", (socket) => {
 
   socket.on("newChat", (message) => {
     console.log(message);
+    chatList.push(message);
+    socket.broadcast.emit("newChatServer", message);
   });
 });
