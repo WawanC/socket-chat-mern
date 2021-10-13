@@ -1,14 +1,18 @@
 import { useState, useRef, useEffect } from "react";
-import { io } from "socket.io-client";
 import ChatInput from "./components/ChatInput";
 import ChatBox from "./components/ChatBox";
+import { Socket } from "socket.io-client";
 
-const App = () => {
-  // const socket = io("http://localhost:8080");
+interface propsInterface {
+  socket: Socket;
+}
+
+const App: React.FC<propsInterface> = (props) => {
   const [chatList, setChatList] = useState(["Hola !", "Selamat Pagi"]);
   const chatBoxRef = useRef<HTMLDivElement>(null);
 
   const addChatList = (chatText: string) => {
+    props.socket.emit("newChat", chatText);
     setChatList((prevState) => {
       const newChatList = [...prevState];
       newChatList.push(chatText);

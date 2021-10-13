@@ -12,4 +12,8 @@ const io = serverIO.init(server);
 
 io.on("connection", (socket) => {
   console.log("New Connection");
+
+  socket.on("newChat", (message) => {
+    console.log(message);
+  });
 });
